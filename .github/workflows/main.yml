@@ -1,0 +1,44 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Clone code
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Install deps
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install cmake
+
+    - name: Install XMake
+      uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: '2.9.5'
+
+    - name: Install GCC
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        version: 12
+
+    - name: GCC version
+      run: |
+        gcc --version
+        g++ --version
+          
+    - name: Build
+      run: |
+        xmake f -y -p linux -a x86_64 -m release
+        xmake -v -D -b
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with: 
+        name: release
+        path: build/linux/x64/release

@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "xmake",
+            "compileCommands": ".vscode/compile_commands.json",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ]
+        }
+    ],
+    "version": 4
+}

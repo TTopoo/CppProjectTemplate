@@ -2,7 +2,9 @@ set_xmakever("2.9.5")
 
 add_rules("mode.debug", "mode.release", "mode.releasedbg")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
-add_rules("plugin.vsxmake.autoupdate")
+if is_plat("windows") then
+    add_rules("plugin.vsxmake.autoupdate")
+end
 
 local packages = {
     "nlohmann_json v3.11.3",

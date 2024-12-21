@@ -1,4 +1,4 @@
-set_xmakever("2.9.5")
+set_xmakever("2.9.7")
 
 add_rules("mode.debug", "mode.release", "mode.releasedbg")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})

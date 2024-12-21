@@ -19,6 +19,12 @@ end
 set_languages("c++23")
 -- set_arch("x86")
 
+if is_plat("windows") then
+    set_arch("x64")
+elseif is_plat("linux") then
+    set_arch("x86_64")
+end
+
 target("Project")
     set_default(true)
 

@@ -41,6 +41,8 @@ namespace fs = std::filesystem;
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
+#include "singleton.hpp"
+
 // #include <windows.h>
 
 #endif // STDAFX_H

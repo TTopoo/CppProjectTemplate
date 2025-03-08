@@ -6,44 +6,12 @@ Logger::Logger() :
     level(spdlog::level::info)
 {
 }
-Logger &Logger::get_instance()
-{
-    static Logger instance;
-    return instance;
-}
-
 std::shared_ptr<spdlog::logger> Logger::get_main_logger()
-{
-    return get_instance()._get_main_logger();
-}
-
-std::shared_ptr<spdlog::logger> Logger::get_named_logger(std::string &&logger_name)
-{
-    return get_instance()._get_named_logger(logger_name);
-}
-
-void Logger::reset_logger_level(std::shared_ptr<spdlog::logger> logger)
-{
-    if (logger == nullptr)
-        logger = get_main_logger();
-
-    auto before_level = logger->level();
-    auto after_level = get_instance().level;
-    if (before_level == after_level)
-    {
-        SPDLOG_LOGGER_INFO(get_main_logger(), "log level is same");
-        return;
-    }
-    SPDLOG_LOGGER_INFO(get_main_logger(), "level from {} to {}", spdlog::level::to_string_view(before_level), spdlog::level::to_string_view(after_level));
-    get_instance()._reset_logger_level(logger);
-}
-
-std::shared_ptr<spdlog::logger> Logger::_get_main_logger()
 {
     return get_named_logger("main");
 }
 
-std::shared_ptr<spdlog::logger> Logger::_get_named_logger(std::string &logger_name)
+std::shared_ptr<spdlog::logger> Logger::get_named_logger(std::string &&logger_name)
 {
     auto logger = spdlog::get(logger_name);
     if (!logger)
@@ -56,11 +24,11 @@ std::shared_ptr<spdlog::logger> Logger::_get_named_logger(std::string &logger_na
     return logger;
 }
 
-void Logger::_set_logger_level(spdlog::level::level_enum level)
+void Logger::set_logger_level(spdlog::level::level_enum level)
 {
     this->level = level;
 }
-void Logger::_reset_logger_level(std::shared_ptr<spdlog::logger> logger)
+void Logger::reset_logger_level(std::shared_ptr<spdlog::logger> logger)
 {
     logger->set_level(level);
 }

@@ -1,5 +1,5 @@
-﻿#include "../base/logger.h"
-#include "../base/stdafx.h"
+﻿#include "base/logger.h"
+#include "base/stdafx.h"
 
 int main(int argc, char *argv[])
 {

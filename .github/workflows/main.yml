@@ -20,7 +20,7 @@ jobs:
     - name: Install XMake
       uses: xmake-io/github-action-setup-xmake@v1
       with:
-        xmake-version: '2.9.7'
+        xmake-version: '2.9.8'
 
     - name: Install GCC
       uses: egor-tensin/setup-gcc@v1

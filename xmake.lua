@@ -1,4 +1,4 @@
-set_xmakever("2.9.7")
+set_xmakever("2.9.8")
 
 add_rules("mode.debug", "mode.release", "mode.releasedbg")
 add_rules("plugin.compile_commands.autoupdate", {outputdir = ".vscode"})
@@ -17,7 +17,6 @@ for _, package in ipairs(packages) do
 end
 
 set_languages("c++23")
--- set_arch("x86")
 
 if is_plat("windows") then
     set_arch("x64")
@@ -25,15 +24,25 @@ elseif is_plat("linux") then
     set_arch("x86_64")
 end
 
-target("Project")
-    set_default(true)
+set_policy("build.warning", true)
+set_warnings("all", "extra")
+if is_mode("debug") then
+    set_runtimes("MDd")
+    set_symbols("debug")
+    set_optimize("none")
+    add_defines("DEBUG")
+elseif is_mode("releasedbg") then
+    set_runtimes("MDd")
+    set_symbols("debug")
+    set_optimize("fastest")
+    add_defines("DEBUG")
+else
+    set_runtimes("MD")
+    set_symbols("hidden")
+    set_strip("all")
+    set_optimize("fastest")
+    add_defines("NDEBUG")
+end
 
-    set_kind("binary")
-    add_files("src/entry/main.cpp")
-
-    -- set_kind("shared")
-    -- add_files("src/entry/dllmain.cpp")
-
-    set_pcxxheader("src/base/stdafx.h")
-    add_files("src/base/*.cpp")
-    -- add_files("src/*.cpp")
+includes("src/common")
+includes("src/app1")
